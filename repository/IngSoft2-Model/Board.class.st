@@ -9,7 +9,8 @@ Class {
 		'cardHandlers',
 		'deck',
 		'lastCardPlayed',
-		'lastSquarePlayed'
+		'lastSquarePlayed',
+		'squareHandlers'
 	],
 	#category : #'IngSoft2-Model-Core'
 }
@@ -126,13 +127,23 @@ Board >> initializePlayedBy: aGroupOfPlayers withNumberOf: numberOfLaps with: aG
 		collect: [ :player | Position of: player at: 1 after: 0 ].
 	cardHandlers := aGroupOfPlayers
 		collect: [ :player | CardHandler with: player ].
+	
 	self distributeCardsFrom: aDeck.
+		squareHandlers:= aGroupOfSquares
+		collect: [ :square | SquareHandler with: square ].
+
 	squares := aGroupOfSquares.
 	laps := numberOfLaps.
 	players := aGroupOfPlayers.
 	deck := aDeck.
 	lastCardPlayed := nil.
 	lastSquarePlayed := EffectlessSquare new.
+]
+
+{ #category : #accesing }
+Board >> isReversed: aSquare [
+	
+	^(self squareHanlderOf: aSquare) reversed. 
 ]
 
 { #category : #accessing }
@@ -185,6 +196,14 @@ Board >> moveAllPlayersBackards: numberOfSquaresToMoveBackwards except: aPlayer 
 	playersToMove:= self players.
 	playersToMove remove: aPlayer.
 	playersToMove do:[:player| self move: player backwards: numberOfSquaresToMoveBackwards ].
+]
+
+{ #category : #action }
+Board >> moveAllPlayersForward: numberOfSquaresToMove except: aPlayer [
+	| playersToMove |
+	playersToMove:= self players.
+	playersToMove remove: aPlayer.
+	playersToMove do:[:player| self move: player withoutEffectTo: numberOfSquaresToMove.].
 ]
 
 { #category : #accessing }
@@ -240,6 +259,15 @@ Board >> restartPositionOfAllPlayers [
 			[ :player | Position of: player at: 1 after: (self lapOf: player) ]
 ]
 
+{ #category : #action }
+Board >> reverseSquareNumber: aNumberOfSquare [
+	| square squareHandler |
+	square:= squares at: aNumberOfSquare.
+	squareHandler:= self squareHanlderOf: square.
+	
+	squareHandler reverse: square.
+]
+
 { #category : #accessing }
 Board >> size [
 	^ squares size
@@ -248,6 +276,14 @@ Board >> size [
 { #category : #accessing }
 Board >> sortedPositions [
 	^ positions asSortedCollection: [ :playerA :playerB | playerA >= playerB ]
+]
+
+{ #category : #accesing }
+Board >> squareHanlderOf: aSquare [
+		| squareHandler |
+	squareHandler := squareHandlers
+		detect: [ :handler | handler square = aSquare ].
+	^ squareHandler
 ]
 
 { #category : #action }

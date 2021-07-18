@@ -422,6 +422,28 @@ LudoMagicGameTest >> testJorgeGetsToAMoonWalkAndGoesToTheFirstSquare [
 ]
 
 { #category : #'squares usage tests' }
+LudoMagicGameTest >> testJorgeGetsToAWormHoleSquareThatIsAffectedByAReversalCardAndGoesForwardAndUsesARepeatCard [
+	| aGame squares aReversalCard aRepeatCard |
+	aReversalCard := ReversalCard new.
+	aRepeatCard := RepeatCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. WormHoleSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard. aRepeatCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	aGame turn.
+	aGame affect: julian using: aRepeatCard   by: julian.
+	self assert: (aGame numberOfSquareOf: jorge) equals: 10.
+	self assert: (aGame numberOfSquareOf: julian) equals: 5.
+	
+]
+
+{ #category : #'squares usage tests' }
 LudoMagicGameTest >> testJorgeGetsToAtomicBombSquare [
 
 	| squares  aGame |
@@ -860,6 +882,71 @@ LudoMagicGameTest >> testJulianGetsAnOverloadCardAndThrowItToJorge [
 	aGame affect: jorge using: anOverloadCard by: julian.
 	self do: 2 theGame: aGame.
 	self assert: (aGame numberOfSquareOf: jorge) equals: 5
+]
+
+{ #category : #'squares usage tests' }
+LudoMagicGameTest >> testJulianGetsToAMoonWalkSquareThatIsAffectedByAReversalCardAndGoesForward [
+	| aGame squares aReversalCard |
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. . MoonWalkSquare with: 4. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	aGame turn.
+	
+
+	self assert: (aGame numberOfSquareOf: jorge) equals: 6.
+	self assert: (aGame numberOfSquareOf: julian) equals: 5.
+]
+
+{ #category : #'squares usage tests' }
+LudoMagicGameTest >> testJulianGetsToASpeedUpThatIsAffectedByAReversalCardAndGoesBackwards [
+	| aGame squares aReversalCard |
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SpeedUpSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	aGame turn.
+	aGame turn.
+	
+
+	self assert: (aGame numberOfSquareOf: jorge) equals: 2.
+	self assert: (aGame numberOfSquareOf: julian) equals: 2.
+]
+
+{ #category : #'squares usage tests' }
+LudoMagicGameTest >> testJulianGetsToAWormHoleSquareThatIsAffectedByAReversalCardAndGoesForward [
+	| aGame squares aReversalCard |
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. . WormHoleSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	aGame turn.
+	aGame turn.
+	
+
+	self assert: (aGame numberOfSquareOf: jorge) equals: 10.
+	self assert: (aGame numberOfSquareOf: julian) equals: 10.
 ]
 
 { #category : #'squares usage tests' }

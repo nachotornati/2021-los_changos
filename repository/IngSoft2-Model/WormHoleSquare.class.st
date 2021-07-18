@@ -6,5 +6,7 @@ Class {
 
 { #category : #action }
 WormHoleSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: board [
-	board move: aPlayer backwards: 4.
+	(board isReversed: self)
+	ifTrue: [ board move: aPlayer withoutEffectTo: 4.]
+	ifFalse: [board move: aPlayer backwards: 4.]
 ]
