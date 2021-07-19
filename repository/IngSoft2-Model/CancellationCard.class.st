@@ -7,5 +7,7 @@ Class {
 { #category : #action }
 CancellationCard >> applyTo: aTarget in: aGame from: aPlayer [
 	aGame validateThrowOfAnInstantaneous: self from: aPlayer.
+	aGame removeToAllSquares: aTarget.
 	aGame removeToAllPlayersPermanent: aTarget .
+
 ]

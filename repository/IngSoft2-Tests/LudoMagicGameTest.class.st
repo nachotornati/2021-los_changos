@@ -488,6 +488,29 @@ LudoMagicGameTest >> testJorgeGetsToASpeedUpThatIsAffectedByAReversalCardAndGoes
 ]
 
 { #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToAWormHoleSquareThatIsAffectedByAReversalCardAndCancelsIt [
+	| aGame squares aReversalCard aCancellationCard |
+	aReversalCard := ReversalCard new.
+	aCancellationCard := CancellationCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. WormHoleSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard. aCancellationCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	aGame turn.
+	aGame affect: aReversalCard using: aCancellationCard by: julian.
+	aGame turn.
+	self assert: (aGame numberOfSquareOf: jorge) equals: 10.
+	self assert: (aGame numberOfSquareOf: julian) equals: 2.
+	
+]
+
+{ #category : #reversed }
 LudoMagicGameTest >> testJorgeGetsToAWormHoleSquareThatIsAffectedByAReversalCardAndGoesForward [
 	| aGame squares aReversalCard |
 	aReversalCard := ReversalCard new.
@@ -669,35 +692,6 @@ LudoMagicGameTest >> testJulianCancelsAnOverloadCardWhenIsNotHisTurn [
 	aGame affect: anOverloadCard using: aCancellationCard by: julian.
 	self do: 2 theGame: aGame.
 	self assert: (aGame numberOfSquareOf: julian) equals: 4
-]
-
-{ #category : #'exception tests' }
-LudoMagicGameTest >> testJulianCannotCancelACardThatIsNotInTheGame [
-	| aGame squares aCancellationCard anOverloadCard |
-	aCancellationCard := CancellationCard new.
-	anOverloadCard := OverloadCard new.
-	squares := {EffectlessSquare new.
-	EffectlessSquare new.
-	EffectlessSquare new.
-	EffectlessSquare new.
-	DeliveryCardSquare new}.
-	aGame := LudoMagicGame
-		playedBy: players
-		withNumberOfLaps: 2
-		throwing:
-			{(LoadedDice withValues: #(1 2)).
-			(LoadedDice withValues: #(1 2))}
-		andWithBoardOfSquares: squares
-		withDeckOf: (LoadedDeck withCards: {aCancellationCard}).
-	self do: 3 theGame: aGame.
-	self
-		should:
-			[ aGame affect: anOverloadCard using: aCancellationCard by: julian ]
-		raise: Error
-		withExceptionDo: [ :error | 
-			self
-				assert: error messageText
-				equals: CardHandler noCardMatchErrorMessage ]
 ]
 
 { #category : #'exception tests' }

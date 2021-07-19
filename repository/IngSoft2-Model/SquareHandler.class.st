@@ -3,30 +3,45 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'square',
-		'reversed'
+		'affectCards'
 	],
 	#category : #'IngSoft2-Model-Core'
 }
+
+{ #category : #action }
+SquareHandler class >> noCardMatchErrorMessage [
+	^'hola'.
+]
 
 { #category : #'instance creation' }
 SquareHandler class >> with: square [
 	^self new initializeWith: square.
 ]
 
+{ #category : #accesing }
+SquareHandler >> affectsSquare: aCard [
+	^affectCards anySatisfy: [:card | card class = aCard class ].
+]
+
 { #category : #initialization }
 SquareHandler >> initializeWith: aSquare [
+	affectCards:= OrderedCollection new.
 	square:=aSquare.
-	reversed:=false.
+]
+
+{ #category : #action }
+SquareHandler >> removeEffectOf: aCard [ 
+	affectCards := affectCards collect: [:card | (card class = ReversalCard) not]
 ]
 
 { #category : #action }
 SquareHandler >> reverse: aSquare [
-	reversed:=true.
+	affectCards add: ReversalCard new.
 ]
 
 { #category : #accesing }
 SquareHandler >> reversed [
-	^ reversed
+	^ affectCards anySatisfy: [:card | card class = ReversalCard ].
 ]
 
 { #category : #accesing }

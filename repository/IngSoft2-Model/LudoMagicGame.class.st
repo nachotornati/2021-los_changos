@@ -166,6 +166,11 @@ LudoMagicGame >> removeToAllPlayersPermanent: aCard [
 	board removeToAllPlayersPermanent: aCard
 ]
 
+{ #category : #action }
+LudoMagicGame >> removeToAllSquares: aCard [
+	board removeToAllSquares: aCard.
+]
+
 { #category : #initialization }
 LudoMagicGame >> size [
 	^ board size

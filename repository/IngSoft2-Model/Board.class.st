@@ -251,10 +251,20 @@ Board >> removeToAllPlayersPermanent: card [
 	| handlersWithCardToBeRemoved |
 	handlersWithCardToBeRemoved := cardHandlers
 		select: [ :cardHandler | cardHandler affectsPlayer: card ].
-	self
-	validateIsNotEmpty: handlersWithCardToBeRemoved.
+		
+		
 	handlersWithCardToBeRemoved
 		do: [ :cardHandler | cardHandler removeEffectOf: card ].
+		lastCardPlayed := CancellationCard  new.
+]
+
+{ #category : #action }
+Board >> removeToAllSquares: card [
+	|handlersWithCardToBeRemoved |
+	handlersWithCardToBeRemoved := squareHandlers
+		select: [ :squareHandler | squareHandler affectsSquare: card ].
+	handlersWithCardToBeRemoved
+		do: [ :squareHandler | squareHandler removeEffectOf: card ].
 		lastCardPlayed := CancellationCard  new.
 ]
 
@@ -290,10 +300,4 @@ Board >> squareHanlderOf: aSquare [
 	squareHandler := squareHandlers
 		detect: [ :handler | handler square = aSquare ].
 	^ squareHandler
-]
-
-{ #category : #action }
-Board >> validateIsNotEmpty: handlersWithCardToBeRemoved [
-	handlersWithCardToBeRemoved isEmpty
-		ifTrue: [ self error: CardHandler noCardMatchErrorMessage ]
 ]
