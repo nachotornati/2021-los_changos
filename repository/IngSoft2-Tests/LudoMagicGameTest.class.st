@@ -50,7 +50,6 @@ LudoMagicGameTest >> testAGameCannotHaveAWinnerIfItIsNotFinished [
 
 { #category : #'exception tests' }
 LudoMagicGameTest >> testAGameCannotHaveAWinnerWhenItIsNew [
-
 	self
 		should: [anOneLapGame winner] 
 		raise: Error
