@@ -6,8 +6,12 @@ Class {
 
 { #category : #action }
 SpeedUpSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [
-	(aBoard isReversed: self)
-	ifTrue:[aBoard move: aPlayer backwards:4 ]
-	ifFalse:[aBoard move: aPlayer withoutEffectTo: 4].
+
+	aBoard move: aPlayer withoutEffectTo: 4.
 	
+]
+
+{ #category : #action }
+SpeedUpSquare >> makeReversedEffectOn: aPlayer thatHasItsPositionIn: aBoard [
+	aBoard move: aPlayer backwards:4.
 ]

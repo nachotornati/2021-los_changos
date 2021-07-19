@@ -29,9 +29,17 @@ SquareHandler >> initializeWith: aSquare [
 	square:=aSquare.
 ]
 
+{ #category : #actions }
+SquareHandler >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [
+	
+	(self reversed)
+	ifTrue:[square makeReversedEffectOn: aPlayer thatHasItsPositionIn: aBoard] 
+	ifFalse:[square makeEffectOn: aPlayer thatHasItsPositionIn: aBoard].
+]
+
 { #category : #action }
 SquareHandler >> removeEffectOf: aCard [ 
-	affectCards := affectCards collect: [:card | (card class = ReversalCard) not]
+	affectCards := affectCards select: [:card | (card class = aCard class)not]
 ]
 
 { #category : #action }
@@ -44,7 +52,7 @@ SquareHandler >> reversed [
 	^ affectCards anySatisfy: [:card | card class = ReversalCard ].
 ]
 
-{ #category : #accesing }
+{ #category : #action }
 SquareHandler >> square [
-	^ square
+	^square.
 ]

@@ -6,9 +6,12 @@ Class {
 
 { #category : #action }
 DeliveryCardSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [ 
-	(aBoard isReversed: self)
-	ifTrue: [ aBoard removeCardFromDeckTo: aPlayer]
-	ifFalse: [aBoard giveCardFromDeckTo: aPlayer.].
+	aBoard giveCardFromDeckTo: aPlayer.
 	
 	
+]
+
+{ #category : #action }
+DeliveryCardSquare >> makeReversedEffectOn: aPlayer thatHasItsPositionIn: aBoard [
+	aBoard removeCardFromDeckTo: aPlayer
 ]

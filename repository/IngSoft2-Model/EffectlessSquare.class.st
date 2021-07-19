@@ -8,3 +8,8 @@ Class {
 EffectlessSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [ 
 
 ]
+
+{ #category : #action }
+EffectlessSquare >> makeReversedEffectOn: aPlayer thatHasItsPositionIn: aBoard [
+	
+]

@@ -8,7 +8,12 @@ Class {
 SprintSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: board [
 	| quantityOfSquaresToMove |
 	quantityOfSquaresToMove:= board quantityOfCardsOf: aPlayer.
-	(board isReversed: self)
-	ifTrue: [board move: aPlayer backwards: quantityOfSquaresToMove ]
-	ifFalse: [board move: aPlayer forward: quantityOfSquaresToMove].
+	board move: aPlayer forward: quantityOfSquaresToMove
+]
+
+{ #category : #action }
+SprintSquare >> makeReversedEffectOn: aPlayer thatHasItsPositionIn: aBoard [
+		| quantityOfSquaresToMove |
+	quantityOfSquaresToMove:= aBoard quantityOfCardsOf: aPlayer.
+	aBoard move: aPlayer backwards: quantityOfSquaresToMove
 ]

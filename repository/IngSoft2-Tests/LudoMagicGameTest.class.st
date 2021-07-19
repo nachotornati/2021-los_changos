@@ -487,6 +487,48 @@ LudoMagicGameTest >> testJorgeGetsToAReversdDeliveryCardSquareAndLosesACard [
 ]
 
 { #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToAReversedAtomicBombSquareAndGoesToTheStart [
+	| aGame squares aReversalCard |
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. . EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. AtomicBombSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
+	
+	aGame affect: 11 using: aReversalCard by: jorge.
+	
+	self do: 3 theGame: aGame.
+
+	self assert: (aGame numberOfSquareOf: jorge) equals: 1.
+	self assert: (aGame numberOfSquareOf: julian) equals: 1.
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToAReversedEffectlessSquaresAndDoesNothing [
+	| aGame squares aReversalCard |
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. . EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	
+	self do: 2 theGame: aGame.
+
+	self assert: (aGame numberOfSquareOf: jorge) equals: 6.
+	self assert: (aGame numberOfSquareOf: julian) equals: 6.
+]
+
+{ #category : #reversed }
 LudoMagicGameTest >> testJorgeGetsToAReversedSprintSquareWithOneCardInHand [
 	| aGame squares anOverloadCard aReversalCard |
 	anOverloadCard := OverloadCard new.

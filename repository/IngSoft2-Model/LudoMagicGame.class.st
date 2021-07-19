@@ -171,6 +171,11 @@ LudoMagicGame >> removeToAllSquares: aCard [
 	board removeToAllSquares: aCard.
 ]
 
+{ #category : #accessing }
+LudoMagicGame >> reverseSquareNumber: aNumberOfSquare [ 
+	board reverseSquareNumber: aNumberOfSquare.
+]
+
 { #category : #initialization }
 LudoMagicGame >> size [
 	^ board size
@@ -182,7 +187,7 @@ LudoMagicGame >> throwDices [
 	^(dices collect:[ :dice | dice roll ]) sum .
 ]
 
-{ #category : #accessing }
+{ #category : #action }
 LudoMagicGame >> turn [
 	self validateIfRollsAreAllowed.
 	board move: turnPlayer forward: self numberOfSquaresToMove.

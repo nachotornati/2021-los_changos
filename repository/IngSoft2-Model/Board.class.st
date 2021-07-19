@@ -85,7 +85,7 @@ Board >> addToAllEffectOf: aCard [
 
 { #category : #action }
 Board >> applyEffectOfTheLastPlayedSquareTo: aPlayer from: aCard [
-	lastSquarePlayed makeEffectOn: aPlayer thatHasItsPositionIn: self.
+	(self squareHanlderOf: lastSquarePlayed) makeEffectOn: aPlayer thatHasItsPositionIn: self.
 	lastCardPlayed:= aCard.
 ]
 
@@ -145,11 +145,6 @@ Board >> initializePlayedBy: aGroupOfPlayers withNumberOf: numberOfLaps with: aG
 	lastSquarePlayed := EffectlessSquare new.
 ]
 
-{ #category : #accesing }
-Board >> isReversed: aSquare [
-	^(self squareHanlderOf: aSquare) reversed. 
-]
-
 { #category : #accessing }
 Board >> lapOf: aPlayer [ 
 	^ (self positionOf: aPlayer) lap.
@@ -181,7 +176,9 @@ Board >> move: aPlayer forward: squaresToMove [
 	newPosition := self move: aPlayer withoutEffectTo: squaresToMove.
 	currentSquare := squares at: newPosition numberOfSquare.
 	lastSquarePlayed := currentSquare.
-	currentSquare makeEffectOn: aPlayer thatHasItsPositionIn: self
+	
+	(self squareHanlderOf: currentSquare) makeEffectOn: aPlayer thatHasItsPositionIn: self.
+	"currentSquare makeEffectOn: aPlayer thatHasItsPositionIn: self"
 ]
 
 { #category : #action }
@@ -290,7 +287,7 @@ Board >> restartPositionOfAllPlayers [
 { #category : #action }
 Board >> reverseSquareNumber: aNumberOfSquare [
 	| square squareHandler |
-	square:= squares at:aNumberOfSquare ifAbsent:[self error: (Board errorMessageOutOfBound)] .
+	square:= squares at:aNumberOfSquare ifAbsent:[self error: (self class errorMessageOutOfBound)] .
 	squareHandler:= self squareHanlderOf: square.
 	squareHandler reverse: square.
 	lastCardPlayed:= ReversalCard new.
