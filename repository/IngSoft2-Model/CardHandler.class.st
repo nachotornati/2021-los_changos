@@ -57,6 +57,12 @@ CardHandler >> quantityOfCardsInHand [
 ]
 
 { #category : #action }
+CardHandler >> removeACardFromHand [
+	cardsInHand isEmpty
+	ifFalse:[cardsInHand removeFirst].
+]
+
+{ #category : #action }
 CardHandler >> removeEffectOf: aCard [
 	cardsThatAffect remove: aCard ifAbsent: [ ^self error: self class noCardMatchErrorMessage ].
 ]

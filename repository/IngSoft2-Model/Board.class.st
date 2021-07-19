@@ -236,6 +236,12 @@ Board >> positionOf: aPlayer [
 ]
 
 { #category : #action }
+Board >> removeCardFromDeckTo: aPlayer [
+	
+	(self cardHandlerOf: aPlayer) removeACardFromHand. 
+]
+
+{ #category : #action }
 Board >> removeFromHand: aCard to: aPlayer [
 	(self cardHandlerOf: aPlayer) removeFromHand: aCard.
 ]
@@ -264,8 +270,8 @@ Board >> reverseSquareNumber: aNumberOfSquare [
 	| square squareHandler |
 	square:= squares at: aNumberOfSquare.
 	squareHandler:= self squareHanlderOf: square.
-	
 	squareHandler reverse: square.
+	lastCardPlayed:= ReversalCard new.
 ]
 
 { #category : #accessing }

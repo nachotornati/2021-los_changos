@@ -421,7 +421,119 @@ LudoMagicGameTest >> testJorgeGetsToAMoonWalkAndGoesToTheFirstSquare [
 	self assert: (aGame numberOfSquareOf: jorge) equals: 5.
 ]
 
-{ #category : #'squares usage tests' }
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToAMoonWalkSquareThatIsAffectedByAReversalCardAndGoesForward [
+	| aGame squares aReversalCard |
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. . MoonWalkSquare with: 4. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	aGame turn.
+	
+
+	self assert: (aGame numberOfSquareOf: jorge) equals: 6.
+	self assert: (aGame numberOfSquareOf: julian) equals: 5.
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToAReversdDeliveryCardSquareAndLosesACard [
+	| aGame squares aReversalCard aReDoCard |
+	aReversalCard := ReversalCard new.
+	aReDoCard := ReDoCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. DeliveryCardSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard. aReDoCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	aGame turn.
+	aGame turn.
+	
+	self deny: (aGame has: jorge the: aReversalCard ).
+	self deny: (aGame has: jorge the: aReDoCard ).
+	
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToASpeedUpThatIsAffectedByAReversalCardAndGoesBackwards [
+	| aGame squares aReversalCard |
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SpeedUpSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	aGame turn.
+	aGame turn.
+	
+
+	self assert: (aGame numberOfSquareOf: jorge) equals: 2.
+	self assert: (aGame numberOfSquareOf: julian) equals: 2.
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToAWormHoleSquareThatIsAffectedByAReversalCardAndGoesForward [
+	| aGame squares aReversalCard |
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. . WormHoleSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	aGame turn.
+	aGame turn.
+	
+
+	self assert: (aGame numberOfSquareOf: jorge) equals: 10.
+	self assert: (aGame numberOfSquareOf: julian) equals: 10.
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToAWormHoleSquareThatIsAffectedByAReversalCardAndGoesForwardAndUsesAReDoCard [
+	| aGame squares aReversalCard aReDoCard |
+	aReversalCard := ReversalCard new.
+	aReDoCard := ReDoCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. WormHoleSquare new. EffectlessSquare new. WormHoleSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5 3))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aReversalCard. aReDoCard}).
+	
+	aGame affect: 6 using: aReversalCard by: jorge.
+	aGame turn.
+	aGame affect: 4 using:aReDoCard   by:  julian.
+	aGame turn.
+	
+	self assert: (aGame numberOfSquareOf: jorge) equals: 10.
+	self assert: (aGame numberOfSquareOf: julian) equals: 8.
+	
+]
+
+{ #category : #reversed }
 LudoMagicGameTest >> testJorgeGetsToAWormHoleSquareThatIsAffectedByAReversalCardAndGoesForwardAndUsesARepeatCard [
 	| aGame squares aReversalCard aRepeatCard |
 	aReversalCard := ReversalCard new.
@@ -882,71 +994,6 @@ LudoMagicGameTest >> testJulianGetsAnOverloadCardAndThrowItToJorge [
 	aGame affect: jorge using: anOverloadCard by: julian.
 	self do: 2 theGame: aGame.
 	self assert: (aGame numberOfSquareOf: jorge) equals: 5
-]
-
-{ #category : #'squares usage tests' }
-LudoMagicGameTest >> testJulianGetsToAMoonWalkSquareThatIsAffectedByAReversalCardAndGoesForward [
-	| aGame squares aReversalCard |
-	aReversalCard := ReversalCard new.
-	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. . MoonWalkSquare with: 4. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
-	aGame := LudoMagicGame
-		playedBy: players
-		withNumberOfLaps: 3
-		throwing:
-			{(LoadedDice withValues: #(5))}
-		andWithBoardOfSquares: squares
-		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
-	
-	aGame affect: 6 using: aReversalCard by: jorge.
-	aGame turn.
-	
-
-	self assert: (aGame numberOfSquareOf: jorge) equals: 6.
-	self assert: (aGame numberOfSquareOf: julian) equals: 5.
-]
-
-{ #category : #'squares usage tests' }
-LudoMagicGameTest >> testJulianGetsToASpeedUpThatIsAffectedByAReversalCardAndGoesBackwards [
-	| aGame squares aReversalCard |
-	aReversalCard := ReversalCard new.
-	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SpeedUpSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
-	aGame := LudoMagicGame
-		playedBy: players
-		withNumberOfLaps: 3
-		throwing:
-			{(LoadedDice withValues: #(5))}
-		andWithBoardOfSquares: squares
-		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
-	
-	aGame affect: 6 using: aReversalCard by: jorge.
-	aGame turn.
-	aGame turn.
-	
-
-	self assert: (aGame numberOfSquareOf: jorge) equals: 2.
-	self assert: (aGame numberOfSquareOf: julian) equals: 2.
-]
-
-{ #category : #'squares usage tests' }
-LudoMagicGameTest >> testJulianGetsToAWormHoleSquareThatIsAffectedByAReversalCardAndGoesForward [
-	| aGame squares aReversalCard |
-	aReversalCard := ReversalCard new.
-	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. . WormHoleSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
-	aGame := LudoMagicGame
-		playedBy: players
-		withNumberOfLaps: 3
-		throwing:
-			{(LoadedDice withValues: #(5))}
-		andWithBoardOfSquares: squares
-		withDeckOf: (LoadedDeck withCards: {aReversalCard}).
-	
-	aGame affect: 6 using: aReversalCard by: jorge.
-	aGame turn.
-	aGame turn.
-	
-
-	self assert: (aGame numberOfSquareOf: jorge) equals: 10.
-	self assert: (aGame numberOfSquareOf: julian) equals: 10.
 ]
 
 { #category : #'squares usage tests' }

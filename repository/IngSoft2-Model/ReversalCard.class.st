@@ -1,7 +1,7 @@
 Class {
 	#name : #ReversalCard,
 	#superclass : #Card,
-	#category : #'IngSoft2-Tests'
+	#category : #'IngSoft2-Model-Core'
 }
 
 { #category : #action }
