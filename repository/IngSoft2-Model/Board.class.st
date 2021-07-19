@@ -16,6 +16,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+Board class >> errorMessageOutOfBound [
+	^'The number of square cannot be greater than the board size'
+]
+
+{ #category : #'instance creation' }
 Board class >> notValidNumberOfLapsErrorMessage [
 	^ 'Number of laps must be greater than 0'
 ]
@@ -234,6 +239,14 @@ Board >> positionOf: aPlayer [
 	^ positions detect: [ :aPosition | aPosition player = aPlayer  ]
 ]
 
+{ #category : #accesing }
+Board >> quantityOfCardsOf: aPlayer [
+	| cardHandler |
+	cardHandler:= self cardHandlerOf: aPlayer.
+	^(cardHandler cardsInHand) size.
+	
+]
+
 { #category : #action }
 Board >> removeCardFromDeckTo: aPlayer [
 	
@@ -277,7 +290,7 @@ Board >> restartPositionOfAllPlayers [
 { #category : #action }
 Board >> reverseSquareNumber: aNumberOfSquare [
 	| square squareHandler |
-	square:= squares at: aNumberOfSquare.
+	square:= squares at:aNumberOfSquare ifAbsent:[self error: (Board errorMessageOutOfBound)] .
 	squareHandler:= self squareHanlderOf: square.
 	squareHandler reverse: square.
 	lastCardPlayed:= ReversalCard new.

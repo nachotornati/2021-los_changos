@@ -219,6 +219,27 @@ LudoMagicGameTest >> testJorgeCannotThrowAnOverloadCardWhenItIsNotHisTurn [
 				equals: LudoMagicGame notCurrentTurnErrorMessage ]
 ]
 
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeCannotThrowAnReversalCardToAnInexistantSquareNumber [
+	| aGame squares anOverloadCard aReversalCard |
+	anOverloadCard := OverloadCard new.
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SprintSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {anOverloadCard. aReversalCard}).
+	
+self
+		should: [aGame affect: 25 using: aReversalCard  by: jorge.] 
+		raise: Error
+		withExceptionDo: [ :error | self assert: error messageText equals: Board errorMessageOutOfBound ].
+	
+]
+
 { #category : #'card usage tests' }
 LudoMagicGameTest >> testJorgeGetsARepeatCardAndPlaysItWithAtomicBombSquare [
 	| aGame squares aRepeatCard |
@@ -466,6 +487,46 @@ LudoMagicGameTest >> testJorgeGetsToAReversdDeliveryCardSquareAndLosesACard [
 ]
 
 { #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToAReversedSprintSquareWithOneCardInHand [
+	| aGame squares anOverloadCard aReversalCard |
+	anOverloadCard := OverloadCard new.
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SprintSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {anOverloadCard. aReversalCard}).
+	aGame affect: 6 using: aReversalCard  by: jorge.
+	aGame turn.
+	self assert: (aGame numberOfSquareOf: jorge) equals: 5.
+	
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToAReversedSprintSquareWithOneCardInHandAndJulianWithTwoCardsInHand [
+	| aGame squares anOverloadCard aReversalCard |
+	anOverloadCard := OverloadCard new.
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SprintSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {anOverloadCard. aReversalCard}).
+	aGame affect: 6 using: aReversalCard  by: jorge.
+	aGame turn.
+	aGame turn.
+	self assert: (aGame numberOfSquareOf: jorge) equals: 5.
+	self assert: (aGame numberOfSquareOf: julian) equals: 4.
+	
+]
+
+{ #category : #reversed }
 LudoMagicGameTest >> testJorgeGetsToASpeedUpThatIsAffectedByAReversalCardAndGoesBackwards [
 	| aGame squares aReversalCard |
 	aReversalCard := ReversalCard new.
@@ -485,6 +546,66 @@ LudoMagicGameTest >> testJorgeGetsToASpeedUpThatIsAffectedByAReversalCardAndGoes
 
 	self assert: (aGame numberOfSquareOf: jorge) equals: 2.
 	self assert: (aGame numberOfSquareOf: julian) equals: 2.
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToASprintSquareWithOneCardInHand [
+	| aGame squares anOverloadCard aReversalCard |
+	anOverloadCard := OverloadCard new.
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SprintSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {anOverloadCard. aReversalCard}).
+	aGame affect: 3 using: aReversalCard  by: jorge.
+	aGame turn.
+	self assert: (aGame numberOfSquareOf: jorge) equals: 7.
+	
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToASprintSquareWithOneCardInHandAndJulianWithTwoCardsInHand [
+	| aGame squares anOverloadCard aReversalCard |
+	anOverloadCard := OverloadCard new.
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SprintSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {anOverloadCard. aReversalCard}).
+	
+	aGame affect: 3 using: aReversalCard  by: jorge.
+	aGame turn.
+	aGame turn.
+	self assert: (aGame numberOfSquareOf: jorge) equals: 7.
+	self assert: (aGame numberOfSquareOf: julian) equals: 8.
+	
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJorgeGetsToASprintSquareWithTwoCardsInHand [
+	| aGame squares anOverloadCard aReversalCard |
+	anOverloadCard := OverloadCard new.
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SprintSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {anOverloadCard. aReversalCard}).
+	
+	aGame turn.
+	self assert: (aGame numberOfSquareOf: jorge) equals: 8.
+	
 ]
 
 { #category : #reversed }
@@ -663,6 +784,28 @@ LudoMagicGameTest >> testJorgeWinsAThreeLapGame [
 	self do: 4 theGame: aThreeLapGame .
 	self assert: aThreeLapGame winner equals: julian.
 	self assert: (aThreeLapGame lapOf: julian) equals: 3.
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJulianCancelsAReversedSprintSquareWithOneCardInHand [
+	| aGame squares aReversalCard aCancellationCard |
+	aCancellationCard := CancellationCard new.
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SprintSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aCancellationCard. aReversalCard}).
+	aGame affect: 6 using: aReversalCard  by: jorge.
+	aGame turn.
+	aGame affect: aReversalCard using: aCancellationCard by: julian.
+	aGame turn.
+	self assert: (aGame numberOfSquareOf: jorge) equals: 5 .
+	self assert: (aGame numberOfSquareOf: julian) equals: 7 .
+	
 ]
 
 { #category : #'card usage tests' }
@@ -1073,6 +1216,26 @@ LudoMagicGameTest >> testJulianGetsTwoOverloadsCardAndThrowsThemToJorge [
 	aGame affect: jorge using: anOverloadCard by: julian.
 	self do: 2 theGame: aGame.
 	self assert: (aGame numberOfSquareOf: jorge) equals: 3
+]
+
+{ #category : #reversed }
+LudoMagicGameTest >> testJulianRepeatsAReversedSprintSquareWithOneCardInHand [
+	| aGame squares aRepeatCard aReversalCard |
+	aRepeatCard := RepeatCard new.
+	aReversalCard := ReversalCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. SprintSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. EffectlessSquare new.}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(5))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {aRepeatCard. aReversalCard}).
+	aGame affect: 6 using: aReversalCard  by: jorge.
+	aGame turn.
+	aGame affect: jorge using: aRepeatCard by: julian.
+	self assert: (aGame numberOfSquareOf: jorge) equals: 4.
+	
 ]
 
 { #category : #'card usage tests' }

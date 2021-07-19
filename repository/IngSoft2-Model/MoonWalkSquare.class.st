@@ -20,6 +20,6 @@ MoonWalkSquare >> initializeWith: aNumberOfSquaresToMoveBackwards [
 { #category : #action }
 MoonWalkSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [
 	(aBoard isReversed: self)
-	ifTrue: [ aBoard moveAllPlayersForward: numberOfSquaresToMoveBackwards except: aPlayer.]
+	ifTrue: [aBoard moveAllPlayersForward: numberOfSquaresToMoveBackwards except: aPlayer.]
 	ifFalse: [aBoard moveAllPlayersBackards: numberOfSquaresToMoveBackwards except: aPlayer.]
 ]
