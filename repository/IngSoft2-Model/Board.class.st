@@ -142,7 +142,6 @@ Board >> initializePlayedBy: aGroupOfPlayers withNumberOf: numberOfLaps with: aG
 
 { #category : #accesing }
 Board >> isReversed: aSquare [
-	
 	^(self squareHanlderOf: aSquare) reversed. 
 ]
 
