@@ -44,7 +44,7 @@ PositionTest >> testNewPositionHasLapTwo [
 PositionTest >> testNewPositionHasLapZero [
 	| aPosition |
 	aPosition := Position of: 'jorge' at: 3 after: 0.
-	self assert: aPosition lap equals: 0
+	self assert: aPosition lap equals: 0.
 ]
 
 { #category : #tests }
