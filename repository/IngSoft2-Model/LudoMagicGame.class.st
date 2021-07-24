@@ -190,7 +190,7 @@ LudoMagicGame >> throwDices [
 { #category : #action }
 LudoMagicGame >> turn [
 	self validateIfRollsAreAllowed.
-	board move: turnPlayer forward: self numberOfSquaresToMove.
+	board move: turnPlayer forwardWithEffect: self numberOfSquaresToMove.
 	finished := board finished: turnPlayer.
 	turnPlayer := board players at: nextPlayerIndex.
 	nextPlayerIndex := (nextPlayerIndex rem: board players size) + 1

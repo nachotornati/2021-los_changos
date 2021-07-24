@@ -13,5 +13,5 @@ DeliveryCardSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [
 
 { #category : #action }
 DeliveryCardSquare >> makeReversedEffectOn: aPlayer thatHasItsPositionIn: aBoard [
-	aBoard removeCardFromDeckTo: aPlayer
+	aBoard removeAnyCardFromHandTo: aPlayer
 ]

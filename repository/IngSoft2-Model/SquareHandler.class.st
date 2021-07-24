@@ -18,7 +18,7 @@ SquareHandler class >> with: square [
 	^self new initializeWith: square.
 ]
 
-{ #category : #accesing }
+{ #category : #boolean }
 SquareHandler >> affectsSquare: aCard [
 	^affectCards anySatisfy: [:card | card class = aCard class ].
 ]
@@ -29,7 +29,7 @@ SquareHandler >> initializeWith: aSquare [
 	square:=aSquare.
 ]
 
-{ #category : #actions }
+{ #category : #action }
 SquareHandler >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [
 	
 	(self reversed)
@@ -47,7 +47,7 @@ SquareHandler >> reverse: aSquare [
 	affectCards add: ReversalCard new.
 ]
 
-{ #category : #accesing }
+{ #category : #boolean }
 SquareHandler >> reversed [
 	^ affectCards anySatisfy: [:card | card class = ReversalCard ].
 ]

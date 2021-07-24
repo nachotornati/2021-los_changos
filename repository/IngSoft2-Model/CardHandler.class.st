@@ -34,7 +34,7 @@ CardHandler >> affectsPlayer: aCard [
 	^ cardsThatAffect includes: aCard.
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 CardHandler >> cardsInHand [
 	^ cardsInHand copy.
 ]

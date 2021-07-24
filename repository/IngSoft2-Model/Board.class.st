@@ -85,16 +85,13 @@ Board >> addToAllEffectOf: aCard [
 
 { #category : #action }
 Board >> applyEffectOfTheLastPlayedSquareTo: aPlayer from: aCard [
-	(self squareHanlderOf: lastSquarePlayed) makeEffectOn: aPlayer thatHasItsPositionIn: self.
+	(self squareHandleOf: lastSquarePlayed) makeEffectOn: aPlayer thatHasItsPositionIn: self.
 	lastCardPlayed:= aCard.
 ]
 
 { #category : #boolean }
 Board >> cardHandlerOf: aPlayer [
-	| playerCardHandler |
-	playerCardHandler := cardHandlers
-		detect: [ :handler | handler player = aPlayer ].
-	^ playerCardHandler
+	^ cardHandlers detect: [ :handler | handler player = aPlayer ].
 ]
 
 { #category : #initialization }
@@ -171,18 +168,18 @@ Board >> move: aPlayer backwards: numberOfSquares [
 ]
 
 { #category : #action }
-Board >> move: aPlayer forward: squaresToMove [
+Board >> move: aPlayer forwardWithEffect: squaresToMove [
 	| currentSquare newPosition |
-	newPosition := self move: aPlayer withoutEffectTo: squaresToMove.
+	newPosition := self move: aPlayer forwardWithoutEffectTo: squaresToMove.
 	currentSquare := squares at: newPosition numberOfSquare.
 	lastSquarePlayed := currentSquare.
 	
-	(self squareHanlderOf: currentSquare) makeEffectOn: aPlayer thatHasItsPositionIn: self.
+	(self squareHandleOf: currentSquare) makeEffectOn: aPlayer thatHasItsPositionIn: self.
 	"currentSquare makeEffectOn: aPlayer thatHasItsPositionIn: self"
 ]
 
 { #category : #action }
-Board >> move: aPlayer withoutEffectTo: squaresToMove [
+Board >> move: aPlayer forwardWithoutEffectTo: squaresToMove [
 	| oldPosition newPosition |
 	oldPosition := self positionOf: aPlayer.
 	positions remove: oldPosition.
@@ -191,7 +188,7 @@ Board >> move: aPlayer withoutEffectTo: squaresToMove [
 	^ newPosition
 ]
 
-{ #category : #accessing }
+{ #category : #action }
 Board >> moveAllPlayersBackards: numberOfSquaresToMoveBackwards except: aPlayer [ 
 	| playersToMove |
 	playersToMove:= self players.
@@ -204,10 +201,10 @@ Board >> moveAllPlayersForward: numberOfSquaresToMove except: aPlayer [
 	| playersToMove |
 	playersToMove:= self players.
 	playersToMove remove: aPlayer.
-	playersToMove do:[:player| self move: player withoutEffectTo: numberOfSquaresToMove.].
+	playersToMove do:[:player| self move: player forwardWithoutEffectTo: numberOfSquaresToMove.].
 ]
 
-{ #category : #accessing }
+{ #category : #action }
 Board >> newPosition: numberOfSquaresToAdvance from: aPosition [
 	| newLap newNumberOfSquare quantityOfSquaresAdvanced |
 	quantityOfSquaresAdvanced := (self
@@ -236,7 +233,7 @@ Board >> positionOf: aPlayer [
 	^ positions detect: [ :aPosition | aPosition player = aPlayer  ]
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 Board >> quantityOfCardsOf: aPlayer [
 	| cardHandler |
 	cardHandler:= self cardHandlerOf: aPlayer.
@@ -245,7 +242,7 @@ Board >> quantityOfCardsOf: aPlayer [
 ]
 
 { #category : #action }
-Board >> removeCardFromDeckTo: aPlayer [
+Board >> removeAnyCardFromHandTo: aPlayer [
 	
 	(self cardHandlerOf: aPlayer) removeACardFromHand. 
 ]
@@ -288,7 +285,7 @@ Board >> restartPositionOfAllPlayers [
 Board >> reverseSquareNumber: aNumberOfSquare [
 	| square squareHandler |
 	square:= squares at:aNumberOfSquare ifAbsent:[self error: (self class errorMessageOutOfBound)] .
-	squareHandler:= self squareHanlderOf: square.
+	squareHandler:= self squareHandleOf: square.
 	squareHandler reverse: square.
 	lastCardPlayed:= ReversalCard new.
 ]
@@ -303,10 +300,7 @@ Board >> sortedPositions [
 	^ positions asSortedCollection: [ :playerA :playerB | playerA >= playerB ]
 ]
 
-{ #category : #accesing }
-Board >> squareHanlderOf: aSquare [
-		| squareHandler |
-	squareHandler := squareHandlers
-		detect: [ :handler | handler square = aSquare ].
-	^ squareHandler
+{ #category : #accessing }
+Board >> squareHandleOf: aSquare [
+	^ squareHandlers detect: [ :handler | handler square = aSquare ].
 ]

@@ -11,5 +11,5 @@ WormHoleSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: board [
 
 { #category : #action }
 WormHoleSquare >> makeReversedEffectOn: aPlayer thatHasItsPositionIn: board [
-	board move: aPlayer withoutEffectTo: 4.
+	board move: aPlayer forwardWithoutEffectTo: 4.
 ]

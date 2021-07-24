@@ -7,7 +7,7 @@ Class {
 { #category : #action }
 SpeedUpSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [
 
-	aBoard move: aPlayer withoutEffectTo: 4.
+	aBoard move: aPlayer forwardWithoutEffectTo: 4.
 	
 ]
 

@@ -8,7 +8,7 @@ Class {
 SprintSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: board [
 	| quantityOfSquaresToMove |
 	quantityOfSquaresToMove:= board quantityOfCardsOf: aPlayer.
-	board move: aPlayer forward: quantityOfSquaresToMove
+	board move: aPlayer forwardWithEffect: quantityOfSquaresToMove
 ]
 
 { #category : #action }
