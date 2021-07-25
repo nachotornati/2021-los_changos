@@ -69,7 +69,7 @@ CardHandler >> removeACardFromHand [
 
 { #category : #action }
 CardHandler >> removeEffectOf: aCard [
-	cardsThatAffect remove: aCard ifAbsent: [ ^self error: self class noCardMatchErrorMessage ].
+	cardsThatAffect := cardsThatAffect select: [:card | (card class = aCard class)not].
 ]
 
 { #category : #action }

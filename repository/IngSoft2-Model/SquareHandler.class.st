@@ -8,11 +8,6 @@ Class {
 	#category : #'IngSoft2-Model-Core'
 }
 
-{ #category : #action }
-SquareHandler class >> noCardMatchErrorMessage [
-	^'hola'.
-]
-
 { #category : #'instance creation' }
 SquareHandler class >> with: square [
 	^self new initializeWith: square.
