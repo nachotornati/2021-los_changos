@@ -10,11 +10,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-CardHandler class >> noCardMatchErrorMessage [
-	^ 'This card cannot be played because there are not active cards that match'
-]
-
-{ #category : #'instance creation' }
 CardHandler class >> with: aPlayer [ 
 	^ self new initializeWith: aPlayer
 ]
