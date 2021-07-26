@@ -16,11 +16,9 @@ ProbabilisticDistributor class >> notValidGroupOfEventsMessage [
 { #category : #'instance creation' }
 ProbabilisticDistributor class >> validate: events [
 	| sumOfProbabilities |
-	events isEmpty
-		ifTrue: [ self error: self notValidGroupOfEventsMessage ].
-	sumOfProbabilities := (events sum: [ :event | event probability ])
-		asInteger.
-	sumOfProbabilities = 1
+	events ifEmpty: [ self error: self notValidGroupOfEventsMessage ].
+	sumOfProbabilities := (events sum: [ :event | event probability ]).
+	(sumOfProbabilities closeTo: 1)
 		ifFalse: [ self error: self notValidGroupOfEventsMessage ]
 ]
 
