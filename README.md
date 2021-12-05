@@ -1,4 +1,8 @@
-# Ingenieria del Software II - Template
+# Ingenieria del Software II
+
+Final Project for School Subject
+
+Objectives: Develop a board game in 3 sprints using Agile methodologies. Code must be prepare for new functionalities in each sprint using best practices in OPP
 
 ![GHA Status](https://github.com/uca-is2/2021-los_changos/actions/workflows/GHA.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/uca-is2/2021-los_changos/badge.svg?branch=master)](https://coveralls.io/github/uca-is2/2021-los_changos?branch=master)
