@@ -2,9 +2,10 @@
 
 Final Project for a School Subject
 
-Objectives: Develop a board game in 3 sprints using Agile methodologies. Code must be prepare for new functionalities in each sprint using best practices in OPP.
+Objectives: Develop a board game in 3 sprints using Agile methodologies. Code must be prepared for new functionalities in each sprint using best practices in OOP.
 
-The entire development is developed by TDD practices
+The entire development is developed using TDD methodologies.
+It was a group project (3 developers)
 
 ![GHA Status](https://github.com/uca-is2/2021-los_changos/actions/workflows/GHA.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/uca-is2/2021-los_changos/badge.svg?branch=master)](https://coveralls.io/github/uca-is2/2021-los_changos?branch=master)
