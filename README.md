@@ -1,6 +1,6 @@
 # Ingenieria del Software II
 
-Final Project for School Subject
+Final Project for a School Subject
 
 Objectives: Develop a board game in 3 sprints using Agile methodologies. Code must be prepare for new functionalities in each sprint using best practices in OPP.
 
